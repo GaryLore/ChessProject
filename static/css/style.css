@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 1.5rem;
+  background-image: radial-gradient(rgb(233, 207, 137), rgb(156, 136, 85));
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0rem 20rem;
+  min-height: 100vh;
+  min-width: 50vw;
+  border-left: 2px solid rgb(77, 65, 1);
+  border-right: 2px solid rgb(77, 65, 1);
+  background-color: #F5F5DC;
+  box-shadow: 0px 0px 10px 4px rgb(0 0 0 / 20%);
+}
+
+body p{
+  margin: 0rem 5rem;
+  text-indent: 1rem;
+}
+
+.begin {
+  font-size: 5rem;
+  border: 3px solid rgb(77, 65, 1);
+  width: 12rem;
+  height: 12rem;
+  display: grid;
+  place-content: center;
+  margin: 5rem auto;
+  background-color: bisque;
+  border-radius: 30%;
+  box-shadow: 0px 0px 10px 4px rgb(0 0 0 / 20%);
+  text-decoration: none;
+}
+
+.begin::after{
+  position: relative;
+  font-size: .5rem;
+  content: "designed by freepik";
+  text-decoration: none;
+  color: black;
+  top: 2rem;
+  left: 3rem;
+}
+
+body h1 {
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.board{
+  min-width: 30vh;
+  aspect-ratio: 1/1;
+  margin: 4% 13%;
+  border: 2px solid rgb(0, 0, 0);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.buttons a{
+  text-decoration: none;
+  border: 2px solid rgb(124, 112, 0);
+  padding: 5px;
+  border-radius: .5rem;
+  color: black;
+  background: whitesmoke;
+}
+
+.buttons a:hover{
+  background: rgba(56, 42, 2, 0.24);
+}
+
+.square{
+  position: relative;
+}
+
+.square.white{
+  background-color: antiquewhite;
+}
+
+.square.black{
+  background-color: rgb(133, 102, 3);
+}
+
+.square.selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 0, 0.3); /* translucent yellow */
+  pointer-events: none; /* allow clicks to pass through */
+}
+
+.square:hover{
+  outline: 3px solid red;
+  z-index: 1;
+  border-radius: .3rem;
+}
+
+

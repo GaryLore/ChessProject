@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <script src="../static/board.js" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='board.js') }}" defer></script>
     <title>Chess</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
     </div>
     
     <div class="buttons">
-        <a href="index.html">Return To Home</a>
+        <a href="{{ url_for('index') }}">Return To Home</a>
         <a>Enter</a>
     </div>
 

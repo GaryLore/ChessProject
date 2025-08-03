@@ -1,10 +1,10 @@
 
-import chess
 from tabulate import tabulate
 from fenConversion import*
 import tensorflow as tf
 from tensorflow import keras
 import time
+import chess
 
 
 def print_board(board):
@@ -29,11 +29,8 @@ def board_current(board):
     for square in chess.SQUARES:
         piece = board.piece_at(square)
         if piece:#only if piece is not none
-            board_state[chess.square_name(square)] = piece.symbol()
+            board_state[chess.square_name(square)] = [piece.symbol(),piece.color]
 
-    
-    print("LOOK HEREEEEEEEEEEEEEEEEE")
-    print(board_state)
     return board_state
 
 def select_piece():
@@ -160,31 +157,31 @@ def run_eval_model(X):
 
     return pos_index
 
-if __name__ == "__main__":
-    checkmate_model = keras.models.load_model("models/mate_model.keras")
-    evaluation_model = keras.models.load_model("models/eval_big_model_v2.keras")
-    board = chess.Board()
 
-    while True:
+checkmate_model = keras.models.load_model("models/mate_model.keras")
+evaluation_model = keras.models.load_model("models/epoch_20.keras")
+board = chess.Board()
 
+while True:
+
+    print()
+    print_board(board)
+
+    if board.turn == chess.WHITE:
+
+        print("White Turn to Move")
+        start = select_piece()
+        make_move(start)
         print()
+
+    else:
+        
+        time.sleep(1.5)#time delay so you can actually see what you moved 
+        print("Black Has Moved")
+        ai_select_move(board)
+
+    result = board.result()
+    if result != "*":
         print_board(board)
-
-        if board.turn == chess.WHITE:
-
-            print("White Turn to Move")
-            start = select_piece()
-            make_move(start)
-            print()
-
-        else:
-            
-            time.sleep(1.5)#time delay so you can actually see what you moved 
-            print("Black Has Moved")
-            ai_select_move(board)
-
-        result = board.result()
-        if result != "*":
-            print_board(board)
-            print(result)
-            break
+        print(result)
+        break

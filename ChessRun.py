@@ -36,6 +36,7 @@ def board_current(board):
     print(board_state)
     return board_state
 
+#not needed anymore but kept just in case
 def select_piece():
 
     while True:
@@ -50,28 +51,17 @@ def select_piece():
 
     return piece
 
-
-def make_move(from_move):
+#modified
+def make_move(player_move, board):
+    print("make move entered")
     while True:
-        move_to = input('Position to Move to: ')
-
-        promoted_piece = ''
-        rank = int(move_to[1])
-
-
-        if rank == 1 or rank == 8:
-            square = chess.parse_square(from_move)
-            piece = board.piece_at(square)
-            if chess.PAWN == piece.piece_type:
-                print('Type "q" for Queen, "r" for Rook, "b" for Bishop, "n" for Knight')
-                promoted_piece = input('Promotion Piece: ')
-
-        move = chess.Move.from_uci(from_move + move_to + promoted_piece)
+        move = chess.Move.from_uci(player_move)
         if board.is_legal(move):
             board.push(move)
-            break
+            print("make move PUSHED")
+            return True
         else:
-            print('Choose a LEGAL Position')
+            return False
 
 def ai_select_move(temp_board, black=True):
 

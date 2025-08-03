@@ -2,6 +2,8 @@
 const board = document.getElementsByClassName("board")[0];
 const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];//column
 let selected = 0;
+let fromMove;
+let toMove;
 
 for(let row = 8; row != 0; --row){
     for(let col = 0; col != 8; ++col){
@@ -21,18 +23,31 @@ document.querySelectorAll('.square').forEach(square => {
     console.log(selected);
     if(selected < 2 && !square.classList.contains('selected')){
         square.classList.toggle('selected');
+        if(selected == 0){
+          fromMove = square.dataset.col + square.dataset.row;
+        }
+        else{
+          toMove = square.dataset.col + square.dataset.row;
+        }
         ++selected;
     }
     else if(square.classList.contains('selected')){
             square.classList.toggle('selected');
+            if(selected == 2){
+              toMove = "";
+            }
+            else{//gotta either be one or two selected
+              fromMove = "";
+            }
             --selected;
+            
     }
   });
 });
 
 window.onload = sendState;
 
-async function sendState(params) {
+async function sendState() {
   let response = await fetch("/update_state");
 
   if (!response.ok) {
@@ -40,15 +55,16 @@ async function sendState(params) {
       return;
   }
 
+  //contains only squares which has pieces 
   let data = await response.json();
 
   //resets the board everytime
-  let squares = document.querySelectorAll('.square')
-  for(let div in squares){
-    div.innerHTML = ""
+  let squareDivs = document.querySelectorAll('.square')
+  for(let div of squareDivs){
+    div.innerHTML = "";
   }
 
-  //fills in the squares that are actually not full
+  //fills in the squares that are actually not full, goes throu
   for(let key in data){
     let col = key[0];
     let row = key[1];
@@ -68,8 +84,30 @@ async function sendState(params) {
   console.log(data);
 }
 
-async function makeMove(params) {
+async function submitMove(params) {
   
+  console.log("SubmitMove Function entered");
+  let response = await fetch("/submit_move", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" }, // Necessary here
+  body: JSON.stringify({ move: `${fromMove}${toMove}` }),
+  });//uses await because we need to ensure its completly done before we update our current state
+
+  let boardResponse = await response.json();
+  //checks if network request was ok and checks if it was legal move or not
+  console.log(response.ok);
+  console.log(boardResponse['success']);
+  //await sleep(2000);
+  if(response.ok && boardResponse['success']){
+    console.log("SEND STATE IS ENTERED");
+    //await sleep(2000);
+    await sendState();
+  }
+}
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function isUpper(character) {

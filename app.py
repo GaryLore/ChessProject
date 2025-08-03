@@ -17,9 +17,17 @@ def index():
 def board():
     return render_template('board.html')
 
-@app.route('/move', methods=['POST'])
+@app.route('/submit_move', methods=['POST'])
 def move():
-    pass
+    player_move = request.get_json()
+    print(player_move['move'])
+    print("White Turn to Move")
+    if make_move(player_move['move'], game):
+        print("Success")
+        return jsonify(success=True)
+    else:
+        print("illegal move")
+        return jsonify(success=False)
 
 @app.route("/update_state")
 def get_board_state():

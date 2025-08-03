@@ -70,7 +70,9 @@ body h1 {
   justify-content: space-around;
 }
 
-.buttons a{
+.buttons a,
+.buttons button{
+  font-size: 1rem;
   text-decoration: none;
   border: 2px solid rgb(124, 112, 0);
   padding: 5px;
@@ -79,7 +81,8 @@ body h1 {
   background: whitesmoke;
 }
 
-.buttons a:hover{
+.buttons a:hover,
+.buttons button:hover{
   background: rgba(56, 42, 2, 0.24);
 }
 

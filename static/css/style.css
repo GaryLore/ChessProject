@@ -102,7 +102,7 @@ body h1 {
 }
 
 .square.black{
-  background-color: rgb(133, 102, 3);
+  background-color: #B65A2D;
 }
 
 .square.selected::after {

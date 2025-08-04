@@ -21,7 +21,7 @@ for(let row = 8; row != 0; --row){
 document.querySelectorAll('.square').forEach(square => {
   square.addEventListener('click', () => {
     console.log(selected);
-    if(selected < 2 && !square.classList.contains('selected')){
+    if(selected < 2 && !square.classList.contains('selected')){//not contains selected and below 2 selected
         square.classList.toggle('selected');
         if(selected == 0){
           fromMove = square.dataset.col + square.dataset.row;
@@ -31,16 +31,22 @@ document.querySelectorAll('.square').forEach(square => {
         }
         ++selected;
     }
-    else if(square.classList.contains('selected')){
-            square.classList.toggle('selected');
-            if(selected == 2){
-              toMove = "";
-            }
-            else{//gotta either be one or two selected
-              fromMove = "";
-            }
-            --selected;
+    else if(square.classList.contains('selected')){//contains selected, we dont need to check if less than 2 doesnt matter, by this code it has to be
+        square.classList.toggle('selected');
+        if(selected == 2){
+          toMove = "";
+        }
+        else{//gotta either be one or two selected
+          fromMove = "";
+        }
+        --selected;
             
+    }
+    else{ //not contains selected and equal to 2 or above(in essence will only be 2), all these are mutually exclusive
+        removeSelect();
+        square.classList.toggle('selected');
+        ++selected;
+        fromMove = square.dataset.col + square.dataset.row;//always gonna be zero so no need to check what selected is
     }
   });
 });
@@ -138,9 +144,6 @@ function removeSelect(){
   console.log(selectedSquares.length)
   selectedSquares[0].classList.toggle('selected');
   selectedSquares[0].classList.toggle('selected');
- //for(let select_square of selectedSquares){
- //   select_square.classList.toggle('selected');
-  //} this doesnt work because selectedSquares is a live HTML COLLECTIon thats why we gotta access 0 twice
 }
 
 function sleep(ms) {

@@ -1,12 +1,10 @@
 import chess
 import tensorflow as tf
 from tensorflow import keras
-from flask import Flask, render_template, jsonify, request, make_response
+from flask import Flask, render_template, jsonify, request, make_response, redirect, url_for
 from ChessRun import *
 
 app = Flask(__name__)
-checkmate_model = keras.models.load_model("models/mate_model.keras")
-evaluation_model = keras.models.load_model("models/epoch_20.keras")
 game = chess.Board()
 
 @app.route('/')
@@ -14,8 +12,14 @@ def index():
     return render_template('index.html')
 
 @app.route('/board')
-def board():
+def board_page():
     return render_template('board.html')
+
+@app.route('/reset')
+def reset():
+    global game
+    game = chess.Board()
+    return redirect(url_for('board_page'))
 
 @app.route('/submit_move', methods=['POST'])
 def move():
@@ -32,3 +36,11 @@ def move():
 @app.route("/update_state")
 def get_board_state():
     return jsonify(board_current(game))
+
+@app.route('/ai_move')
+def ai_move():
+    move = ai_select_move(game)
+    print("ai move" + move)
+    from_move = move[0:2]
+    to_move = move[2:4]
+    return jsonify(fromMove = from_move, toMove = to_move)

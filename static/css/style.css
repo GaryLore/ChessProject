@@ -67,7 +67,8 @@ body h1 {
 .buttons{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin: 0% 13%;
 }
 
 .buttons a,

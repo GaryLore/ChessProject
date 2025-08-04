@@ -95,16 +95,53 @@ async function submitMove(params) {
 
   let boardResponse = await response.json();
   //checks if network request was ok and checks if it was legal move or not
+  console.log(fromMove);
+  console.log(toMove);
   console.log(response.ok);
   console.log(boardResponse['success']);
   //await sleep(2000);
+
+  removeSelect();
+
   if(response.ok && boardResponse['success']){
     console.log("SEND STATE IS ENTERED");
     //await sleep(2000);
     await sendState();
+
+    let ai_success = await aiMove();
+    if(ai_success){
+      await sendState();
+    }
+    else{
+      console.log("AI ERROR")
+    }
   }
 }
 
+async function aiMove(){
+  console.log("AIMove Function entered");
+  let response = await fetch("/ai_move");
+  let boardResponse = await response.json();
+
+  if(response.ok){
+    return true;
+  }
+  return false;
+}
+
+function removeSelect(){
+  fromMove = "";
+  toMove = "";
+  selected = 0;
+  let selectedSquares = document.getElementsByClassName("selected");
+  console.log("LENGTH")
+  console.log(selectedSquares.length)
+  selectedSquares[0].classList.toggle('selected');
+  selectedSquares[0].classList.toggle('selected');
+ //for(let select_square of selectedSquares){
+ //   select_square.classList.toggle('selected');
+  //} this doesnt work because selectedSquares is a live HTML COLLECTIon thats why we gotta access 0 twice
+}
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

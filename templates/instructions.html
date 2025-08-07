@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Chess Info</title>
+</head>
+<body class="center">
+
+    <h1>How to Make a Move in Chess:</h1>
+
+    <ol>
+        <li>First, select the square of the piece you want to move.</li>
+        <li>Then, select the square you want to move that piece to.</li>
+        <li>Finally, press "Submit Move".</li>
+    </ol>
+
+    <p>
+        ⚠️ Important: The order matters. You must first select the piece you want to move.
+        If you select the destination square before selecting the piece, the move will not work.
+        You may also deselect squares by clicking on them again.
+    </p>
+
+    <div>
+        <p><a href="https://simple.wikipedia.org/wiki/Chess_piece" target="_blank">Chess Pieces Attribution</a></p>
+        <p>Cburnett, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-sa/3.0/>, via Wikimedia Commons</p>
+    </div>
+
+    <div class="buttons end">
+        <a href="{{ url_for('index') }}">Return To Home</a>
+        <a href="{{ url_for('board_page') }}">Return to Game</a>
+    </div>
+
+    
+
+</body>
+</html>

@@ -15,6 +15,10 @@ def index():
 def board_page():
     return render_template('board.html')
 
+@app.route('/instructions')
+def instructions():
+    return render_template('instructions.html')
+
 @app.route('/reset')
 def reset():
     global game

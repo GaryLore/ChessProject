@@ -19,9 +19,24 @@ body {
   border-right: 2px solid rgb(77, 65, 1);
   background-color: #F5F5DC;
   box-shadow: 0px 0px 10px 4px rgb(0 0 0 / 20%);
+
 }
 
-body p{
+.remove_decoration{
+  text-decoration: none;
+  color: black;
+}
+
+.center{
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  gap: 3rem;
+}
+
+body p,
+body ol{
   margin: 0rem 5rem;
   text-indent: 1rem;
 }
@@ -38,6 +53,11 @@ body p{
   border-radius: 30%;
   box-shadow: 0px 0px 10px 4px rgb(0 0 0 / 20%);
   text-decoration: none;
+}
+
+.begin:hover{
+  box-shadow: 0px 0px 10px 12px rgb(0 0 0 / 20%);
+  transform: scale(1.02);
 }
 
 .begin::after{
@@ -69,6 +89,10 @@ body h1 {
   flex-direction: row;
   justify-content: space-between;
   margin: 0% 13%;
+}
+
+.buttons.end{
+  margin-top: 9rem;
 }
 
 .buttons a,
@@ -109,12 +133,23 @@ body h1 {
   background-color: #B65A2D;
 }
 
+.square.ai_selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 136, 0, 0.3); /* translucent orange */
+  pointer-events: none; /* allow clicks to pass through */
+  z-index: 1;
+}
+
+/*cascading rules makes our click have yellow priority*/
 .square.selected::after {
   content: '';
   position: absolute;
   inset: 0;
   background-color: rgba(255, 255, 0, 0.3); /* translucent yellow */
   pointer-events: none; /* allow clicks to pass through */
+  z-index: 1;
 }
 
 .square:hover{

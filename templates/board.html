@@ -19,5 +19,28 @@
         <button onclick="submitMove()">Submit Move</button>
     </div>
 
+    <div class="popup">
+        <div class="header">
+            <div class="choose">Select Your Promoted Piece</div>
+            <div class="close">&times;</div>
+        </div>
+        <div class="pieces">
+            <button data-bishop="">
+                <img src="{{ url_for('static', filename='img/_b.svg')}}" alt="B">
+            </button>
+            <button data-knight="">
+                <img src="{{ url_for('static', filename='img/_n.svg')}}" alt="N">
+            </button>
+            <button data-rook="">
+                <img src="{{ url_for('static', filename='img/_r.svg')}}" alt="R">
+            </button>
+            <button data-queen="">
+                <img src="{{ url_for('static', filename='img/_q.svg')}}" alt="Q">
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+
 </body>
 </html>

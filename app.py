@@ -39,7 +39,34 @@ def move():
 
 @app.route("/update_state")
 def get_board_state():
-    return jsonify(board_current(game))
+
+    if game.is_game_over():
+        info = game.outcome()
+        print("Game termination : " + str(info.termination))
+
+        playerWon = info.winner
+        player = ""
+        if playerWon is None:
+            player = "DRAW"
+        elif playerWon == chess.WHITE:
+            player = "WHITE"
+        elif playerWon == chess.BLACK:
+            player = "BLACK"
+
+        response_data = {
+        "board": board_current(game),
+        "end": True,
+        "winner": player
+        }
+        return jsonify(response_data)
+
+    response_data = {
+        "board": board_current(game),
+        "check": game.is_check(),
+        "end": False,
+        "winner": "NONE"
+        }
+    return jsonify(response_data)
 
 @app.route('/ai_move')
 def ai_move():

@@ -6,6 +6,7 @@ let fromMove = "";
 let toMove = "";
 let ai_start="";
 let ai_end="";
+let whiteTurn = true;
 const moveSound = new Audio("../static/chess_sound.mp3");
 
 for(let row = 8; row != 0; --row){
@@ -13,7 +14,7 @@ for(let row = 8; row != 0; --row){
 
         let square = document.createElement("div");
         square.classList.add('square');
-        square.classList.add( (row+col)%2 === 0 ? "black" : "white");
+        square.classList.add( (row+col)%2 === 0 ? "white" : "black");
         square.dataset.col = files[col];
         square.dataset.row = row;
         board.appendChild(square);
@@ -87,23 +88,50 @@ async function sendState() {
     div.innerHTML = "";
   }
 
+  let board_info = data["board"];
   //fills in the squares that are actually not full, goes throu
-  for(let key in data){
+  for(let key in board_info){
     let col = key[0];
     let row = key[1];
-    let piece = data[key];
+    let piece = board_info[key];
     console.log('[data-col="'+col+'"][data-row="'+row+'"]');
     let div = document.querySelector('[data-col="'+col+'"][data-row="'+row+'"]');
 
     if (isUpper(piece)){
       piece = piece.toLowerCase();
-      div.innerHTML = '<img src="../static/img/_' + piece + '.svg"'  + 'alt="Chess piece">';
+
+      if(piece === "k" && data['check'] && whiteTurn)
+        div.classList.toggle("CHECK");
+
+      div.innerHTML = `<img src="../static/img/_${piece}.svg" alt="${piece.toUpperCase()}">`;
     }
     else{
-      div.innerHTML = '<img src="../static/img/' + piece + '.svg"'  + 'alt="Chess piece">';
-    }
 
+      if(piece === "k" && data['check'] && !whiteTurn)
+        div.classList.toggle("CHECK");
+
+      div.innerHTML = `<img src="../static/img/${piece}.svg" alt="${piece}">`;
+    }
   }
+  let title = document.querySelector("h1 a");
+
+  console.log()
+  if(data['end']) {
+
+    console.log(data["winner"])
+    switch (data['winner']) {
+      case "WHITE":
+        title.innerText = "White Wins";
+        break;
+      case "BLACK":
+        title.innerText = "Black Wins";
+        break;
+      default:
+        title.innerText = "Draw";
+        break; 
+  }
+  }
+
   console.log(data);
 }
 
@@ -129,11 +157,15 @@ async function submitMove(params) {
     if(response.ok && boardResponse['success']){
       console.log("SEND STATE IS ENTERED");
       //await sleep(2000);
+      whiteTurn = !whiteTurn;//alternates turns
+      removeCheck(false);//only removes check if there was a check highlighed square if it was check before
       await sendState();
 
     removeAISelect();
     let ai_success = await aiMove();
     if(ai_success){
+      whiteTurn = !whiteTurn;
+      await removeCheck();
       await sendState();
     }
     else{
@@ -144,6 +176,16 @@ async function submitMove(params) {
   else{
     removeSelect(1);
   }
+}
+
+async function removeCheck(AI = true){
+  let kingSquare = document.getElementsByClassName("CHECK");
+      if(kingSquare.length === 1){
+
+        if (AI)
+          await sleep(500);//slight delay before red goes away because AI removes instantly we want to see it
+        kingSquare[0].classList.toggle("CHECK");
+      }
 }
 
 async function aiMove(){

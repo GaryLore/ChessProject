@@ -1,6 +1,5 @@
 
 import chess
-from tabulate import tabulate
 from fenConversion import*
 import tensorflow as tf
 from tensorflow import keras

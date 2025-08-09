@@ -4,8 +4,10 @@ const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];//column
 let selected = 0;
 let fromMove = "";
 let toMove = "";
+let promotionPiece = "";
 let ai_start="";
 let ai_end="";
+let pawnSelected = false;
 let whiteTurn = true;
 const moveSound = new Audio("../static/chess_sound.mp3");
 const overlay = document.querySelector('#overlay');
@@ -23,6 +25,15 @@ for(let row = 8; row != 0; --row){
     }
 }
 
+document.querySelectorAll(".popup .pieces button").forEach(pieceButton => {
+  pieceButton.addEventListener('click', () => {
+    pieceSymbol = pieceButton.querySelector('img');
+    console.log(pieceSymbol.alt)
+    promotionPiece = pieceSymbol.alt;
+    closePopUp();
+  });
+});
+
 document.querySelectorAll('.square').forEach(square => {
   square.addEventListener('click', () => {
     console.log("before Click: " + selected);
@@ -31,6 +42,9 @@ document.querySelectorAll('.square').forEach(square => {
       square.classList.toggle('first');
       fromMove = square.dataset.col + square.dataset.row;
       ++selected;
+    }
+    else if(promotionPiece !== ""){
+      removeSelect();
     }
     else if(square.classList.contains("first")){
       square.classList.toggle('selected');
@@ -55,6 +69,10 @@ document.querySelectorAll('.square').forEach(square => {
       square.classList.toggle('second');
       toMove = square.dataset.col + square.dataset.row;
       ++selected;
+      //check piece of first square make sure its pawn, and check if second square is in last rank
+      if(toMove[1] === "8" && checkPawnSelected()){
+        openPopUp();
+      }
     }
     else if(fromMove !== "" && toMove !== ""){
       removeSelect();
@@ -67,8 +85,9 @@ document.querySelectorAll('.square').forEach(square => {
   });
 });
 
-document.querySelectorAll('.square').forEach(square => { square.addEventListener('click', () => { }); });
-
+document.querySelector('.close').addEventListener('click', () => {
+  closePopUp(true);  
+});
 
 window.onload = sendState;
 
@@ -142,7 +161,7 @@ async function submitMove(params) {
     let response = await fetch("/submit_move", {
     method: "POST",
     headers: { "Content-Type": "application/json" }, // Necessary here
-    body: JSON.stringify({ move: `${fromMove}${toMove}` }),
+    body: JSON.stringify({ move: `${fromMove}${toMove}${promotionPiece}` }),
     });//uses await because we need to ensure its completly done before we update our current state
 
     let boardResponse = await response.json();
@@ -214,6 +233,7 @@ function removeSelect(num = 2){
   
   fromMove = "";
   toMove = "";
+  promotionPiece = "";
   selected = 0;
   let selectedSquares = document.getElementsByClassName("selected");
   console.log("LENGTH")
@@ -222,11 +242,11 @@ function removeSelect(num = 2){
   //only toggles 2 if there is two selected else only toggles 1
   if(num == 2){
     selectedSquares[0].classList.remove('first','second'); //we tell it to remove either because we dont know which one it has
-    selectedSquares[0].classList.toggle('selected');
+    selectedSquares[0].classList.remove('selected');
   }
 
   selectedSquares[0].classList.remove('first','second'); //important to do this before selected so the element isnt removed from live list
-  selectedSquares[0].classList.toggle('selected');
+  selectedSquares[0].classList.remove('selected');
 }
 
 function removeAISelect(){
@@ -257,14 +277,29 @@ function isUpper(character) {
     }
 }
 
-function openPopUp(){
+function openPopUp(){//only open if two squares selected and second square selected is promotion rank with pawn
   let popup = document.querySelector('.popup');
   popup.classList.add("active");
   overlay.classList.add("active");
 }
 
-function closePopUp(){
+function closePopUp(clickX = false){
   let popup = document.querySelector('.popup');
   popup.classList.remove("active");
   overlay.classList.remove("active");
+
+  if(clickX){//if x was clicked person changed their mind and doesnt want to promote
+    removeSelect();
+  }
+}
+
+function checkPawnSelected(){
+  let file = fromMove[0];
+  let rank = fromMove[1];
+  let pieceSelected = document.querySelector(`[data-col="${file}"][data-row="${rank}"]`);
+
+  if (pieceSelected && pieceSelected.firstElementChild.alt === "P" ){
+    return true;
+  }
+  return false;
 }

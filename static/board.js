@@ -8,6 +8,7 @@ let ai_start="";
 let ai_end="";
 let whiteTurn = true;
 const moveSound = new Audio("../static/chess_sound.mp3");
+const overlay = document.querySelector('#overlay');
 
 for(let row = 8; row != 0; --row){
     for(let col = 0; col != 8; ++col){
@@ -254,4 +255,16 @@ function isUpper(character) {
     else {
         return false;
     }
+}
+
+function openPopUp(){
+  let popup = document.querySelector('.popup');
+  popup.classList.add("active");
+  overlay.classList.add("active");
+}
+
+function closePopUp(){
+  let popup = document.querySelector('.popup');
+  popup.classList.remove("active");
+  overlay.classList.remove("active");
 }

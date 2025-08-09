@@ -176,12 +176,15 @@ body h1 {
   position: fixed;
   top: 50%;
   left: 50%;
-  translate: -50% -50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: ease-in-out;
   background-color: aliceblue;
   z-index: 5;
 }
 
-/*.popup.on::after{*/
+.popup.active{
+  transform: translate(-50%, -50%) scale(1);
+}
 
 #overlay{
   position: fixed;
@@ -190,9 +193,14 @@ body h1 {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.63);
-  opacity: 1;
-  pointer-events: all;
+  opacity: 0;
+  pointer-events: none;
   z-index: 4;
+}
+
+#overlay.active{
+  pointer-events: all;
+  opacity: 1;
 }
 
 .popup .header{

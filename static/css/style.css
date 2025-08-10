@@ -12,6 +12,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   margin: 0rem 20rem;
   min-height: 100vh;
   min-width: 50vw;
@@ -25,6 +26,21 @@ body {
 .remove_decoration{
   text-decoration: none;
   color: black;
+}
+
+h1 a{
+  display: inline-block;
+}
+
+h1 a:hover{
+  transform: scale(1.2);
+  color: #C49A00;
+}
+
+.last{
+  font-size: .6rem;
+  padding: 1.5em 1.5em 1em;
+  text-align: center;
 }
 
 .center{
@@ -232,7 +248,12 @@ body h1 {
 .popup .pieces button{
   flex-grow: 1;
   aspect-ratio: 1/1;
-  border-radius: 10%;
+  border-radius: 10%;  
+  
+}
+
+.popup .pieces button:hover{
+  background-color: hsl(0, 0%, 70%); 
 }
 
 .popup img{

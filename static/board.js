@@ -31,6 +31,7 @@ document.querySelectorAll(".popup .pieces button").forEach(pieceButton => {
     console.log(pieceSymbol.alt)
     promotionPiece = pieceSymbol.alt;
     closePopUp();
+    submitMove();
   });
 });
 

@@ -12,15 +12,15 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  margin: 0rem 20rem;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
   min-height: 100vh;
-  min-width: 50vw;
+  width: min(100vw, 40rem);
   border-left: 2px solid rgb(77, 65, 1);
   border-right: 2px solid rgb(77, 65, 1);
   background-color: #F5F5DC;
   box-shadow: 0px 0px 10px 4px rgb(0 0 0 / 20%);
-
 }
 
 .remove_decoration{
@@ -53,7 +53,7 @@ h1 a:hover{
 
 body p,
 body ol{
-  margin: 0rem 5rem;
+  margin: 0rem 10%;
   text-indent: 1rem;
 }
 
@@ -64,7 +64,7 @@ body ol{
   height: 12rem;
   display: grid;
   place-content: center;
-  margin: 5rem auto;
+  margin: 10% auto;
   background-color: bisque;
   border-radius: 30%;
   box-shadow: 0px 0px 10px 4px rgb(0 0 0 / 20%);
@@ -92,7 +92,8 @@ body h1 {
 }
 
 .board{
-  min-width: 30vh;
+  /*min-width: 30vw;*/
+  width: min(90%, 30rem);
   aspect-ratio: 1/1;
   margin: 4% 13%;
   border: 2px solid rgb(0, 0, 0);
@@ -104,7 +105,9 @@ body h1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: min(90%, 30rem);
   margin: 0% 13%;
+  padding-bottom: .5rem;
 }
 
 .buttons.end{

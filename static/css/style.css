@@ -189,7 +189,7 @@ body h1 {
 
 .popup{
   border: 2px solid rgb(124, 112, 0);
-  width: 45vw;
+  width: min(90%, 36rem);
   height: 40vh;
   border-radius: 70px;
   position: fixed;
@@ -227,7 +227,7 @@ body h1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 2.3rem 4rem 0rem 4rem;
+  padding: 2.3rem 2rem 0rem 2rem;
   font-size: 1.5rem;
   font-weight: 400;
 }
@@ -244,8 +244,8 @@ body h1 {
 .popup .pieces{
   display: flex;
   flex-direction: row;
-  gap: 2rem;
-  padding: 1.5rem 4rem 1.5rem 4rem;
+  gap: 3vw;
+  padding: 1.5rem 2rem 1.5rem 2rem;
 }
 
 .popup .pieces button{

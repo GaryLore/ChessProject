@@ -1,6 +1,4 @@
 import chess
-import tensorflow as tf
-from tensorflow import keras
 from flask import Flask, render_template, jsonify, request, make_response, redirect, url_for, session
 from ChessRun import *
 

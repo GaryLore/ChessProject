@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify, request, make_response, redir
 from ChessRun import *
 
 app = Flask(__name__)
-app.secret_key = "2925942692912a3f983e48b1d5ed066915a4a9d2851846e0d2a150db199b7549"
+app.secret_key = "1234"
 app.config.update(
     SECRET_KEY=app.secret_key,   # Loaded from environment
     SESSION_COOKIE_SECURE=True,                # Cookie sent only over HTTPS

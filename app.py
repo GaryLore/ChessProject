@@ -6,7 +6,6 @@ app = Flask(__name__)
 app.secret_key = "1234"
 app.config.update(
     SECRET_KEY=app.secret_key,   # Loaded from environment
-    SESSION_COOKIE_SECURE=True,                # Cookie sent only over HTTPS
     SESSION_COOKIE_HTTPONLY=True,              # JS can't access cookie
     SESSION_COOKIE_SAMESITE="Lax"              # Blocks cross-site requests
 )
